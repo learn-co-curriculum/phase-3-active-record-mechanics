@@ -65,7 +65,7 @@ Student.column_names
 #=> [:id, :name]
 ```
 
-######`#create`
+######`.create`
 Create a new student:
 
 ```ruby
