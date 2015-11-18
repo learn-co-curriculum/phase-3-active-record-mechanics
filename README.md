@@ -24,25 +24,29 @@ Active Record is a Ruby gem, meaning we get an entire library of code just by ru
 This is how we would connect to a database:
 
 ```ruby
-ActiveRecord::Base.establish_connection(
+connection = ActiveRecord::Base.establish_connection(
   :adapter => "sqlite3",
-  :database => "db/students.sqlite"
+  :database => "db/songs.sqlite"
 )
+
+
 ```
 ####Create a table
-This is how we would create a table:
+Let's create our table using SQL:
 
 ```ruby
-class CreateStudents < ActiveRecord::Migration
-  def change
-    create_table :students do |t|
-      t.string :name
-    end
-  end
-end
+sql = <<-SQL
+  CREATE TABLE IF NOT EXISTS songs (
+  id INTEGER PRIMARY KEY, 
+  title TEXT, 
+  length INTEGER
+  )
+SQL
+
+ActiveRecord::Base.connection.execute(sql)
 ```
 
-That's cool. But where it starts to get interesting is when you make use of ActiveRecord's built-in ORM utilities to extend your Ruby classes with ActiveRecord's `Model` class.
+It starts to get interesting when you make use of ActiveRecord's built-in ORM utilities to extend your Ruby classes with ActiveRecord's `Model` class.
 
 With ActiveRecord, and other ORMs the way this is managed is through [Class Inheritance](http://rubylearning.com/satishtalim/ruby_inheritance.html).
 
