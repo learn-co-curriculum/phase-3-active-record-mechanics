@@ -121,3 +121,5 @@ Note that our `Student` class doesn't have any methods defined for `#name` eithe
 class Student < ActiveRecord::Base
 end
 ```
+
+<a href='https://learn.co/lessons/active-record-mechanics-crud' data-visibility='hidden'>View this lesson on Learn.co</a>
