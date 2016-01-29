@@ -122,4 +122,4 @@ class Student < ActiveRecord::Base
 end
 ```
 
-<a href='https://learn.co/lessons/active-record-mechanics-crud' data-visibility='hidden'>View this lesson on Learn.co</a>
+<p data-visibility='hidden'>View <a href='https://learn.co/lessons/active-record-mechanics-crud' title='Active Record Mechanics (CRUD)'>Active Record Mechanics (CRUD)</a> on Learn.co and start learning to code for free.</p>
