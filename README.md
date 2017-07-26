@@ -20,20 +20,17 @@ Still confused? Let's take a quick look at what Active Record can do.
 ## Active Record ORM
 Active Record is a Ruby gem, meaning we get an entire library of code just by running `gem install activerecord` or by including it in our `Gemfile`. As a result, we can get an enormous amount of functionality simply by following a few conventions. 
 
-####Connect to DB
+#### Connect to DB
 This is how we would connect to a database:
-
 ```ruby
 connection = ActiveRecord::Base.establish_connection(
   :adapter => "sqlite3",
   :database => "db/songs.sqlite"
 )
-
-
 ```
-####Create a table
-Let's create our table using SQL:
 
+#### Create a table
+Let's create our table using SQL:
 ```ruby
 sql = <<-SQL
   CREATE TABLE IF NOT EXISTS songs (
@@ -48,10 +45,8 @@ ActiveRecord::Base.connection.execute(sql)
 
 It starts to get interesting when you make use of Active Record's built-in ORM utilities to extend your Ruby classes with Active Record's `Model` class. With Active Record and other ORMs, this is managed through [Class Inheritance](http://rubylearning.com/satishtalim/ruby_inheritance.html).
 
-
-####Active Record Methods
+#### Active Record Methods
 To add Active Record's `Base` methods to your class, inherit from `ActiveRecord::Base`:
-
 ```ruby
 class Student < ActiveRecord::Base
 end
@@ -59,40 +54,35 @@ end
 
 Now your `Student` class has a whole bunch of [new methods](http://guides.rubyonrails.org/active_record_basics.html#creating-active-record-models) available to it that are built into Active Record.
 
-######`.column_names`
+###### `.column_names`
 Retrieve a list of all the columns in the table:
-
 ```ruby
 Student.column_names
 #=> [:id, :name]
 ```
 
-######`.create`
+###### `.create`
 Create a new `Student` entry in the database:
-
 ```ruby
 Student.create(name: 'Jon')
 # INSERT INTO students (name) VALUES ('Jon')
 ```
 
-######`.find`
+###### `.find`
 Retrieve a `Student` from the database by `id`:
-
 ```ruby
 Student.find(1)
 ```
 
-######`.find_by`
+###### `.find_by`
 Find by any attribute, such as `name`:
-
 ```ruby
 Student.find_by(name: 'Jon')
-# SELECT * FROM artists WHERE (name = 'Jon') LIMIT 1
+# SELECT * FROM students WHERE (name = 'Jon') LIMIT 1
 ```
 
-######`attr_accessors`
+###### `attr_accessors`
 You can get or set attributes of an instance of `Student` once you've retrieved it:
-
 ```ruby
 student = Student.find_by(name: 'Jon')
 student.name
@@ -104,9 +94,8 @@ student.name
 #=> 'Steve'
 ```
 
-######`#save`
+###### `#save`
 And then save those changes to the database:
-
 ```ruby
 student = Student.find_by(name: 'Jon')
 student.name = 'Steve'
