@@ -25,7 +25,7 @@ This is how we would connect to a database:
 ```ruby
 connection = ActiveRecord::Base.establish_connection(
   :adapter => "sqlite3",
-  :database => "db/songs.sqlite"
+  :database => "db/students.sqlite"
 )
 ```
 
@@ -33,10 +33,9 @@ connection = ActiveRecord::Base.establish_connection(
 Let's create our table using SQL:
 ```ruby
 sql = <<-SQL
-  CREATE TABLE IF NOT EXISTS songs (
+  CREATE TABLE IF NOT EXISTS students (
   id INTEGER PRIMARY KEY, 
-  title TEXT, 
-  length INTEGER
+  name TEXT
   )
 SQL
 
