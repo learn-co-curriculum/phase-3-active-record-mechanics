@@ -6,7 +6,7 @@
 3. Develop a basic understanding of how to get started with Active Record
 
 ## Why is this useful?
-Up until now, we've built our own ORM. We even worked up to creating a dynamic ORM that could give us lots of functionality via inheritance. Active Record is like the dynamic ORM we built. It maps database tables to Ruby classes. Imagine our dynamic ORM on steroids. We don't have to write much code -- as long as we follow conventions. And as a result, Active Record gives you enormous functionality (Think of our ORM with a lot more methods).
+Up until now, we've built our own ORM. We even worked up to creating a dynamic ORM that could give us lots of functionality via inheritance. Active Record is like the dynamic ORM we built. It maps database tables to Ruby classes. Imagine our dynamic ORM on steroids. We don't have to write much code -- as long as we follow conventions. And as a result, Active Record gives you enormous functionality (think of our ORM with a lot more methods).
 
 ## ORM vs Active Record
 By now you should already be familiar with the concept of an [ORM](http://en.wikipedia.org/wiki/Object-relational_mapping) and have written something of your own via the `Student` and `InteractiveRecord` classes we've been dealing with.
