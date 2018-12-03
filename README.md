@@ -1,87 +1,132 @@
 # Active Record Mechanics (CRUD)
 
 ## Objectives
+
 1. Understand the connection between an ORM and Active Record
 2. Understand why Active Record is useful
 3. Develop a basic understanding of how to get started with Active Record
 
-## Why is this useful?
-Up until now, we've built our own ORM. We even worked up to creating a dynamic ORM that could give us lots of functionality via inheritance. Active Record is like the dynamic ORM we built. It maps database tables to Ruby classes. Imagine our dynamic ORM on steroids. We don't have to write much code -- as long as we follow conventions. And as a result, Active Record gives you enormous functionality (think of our ORM with a lot more methods).
-
 ## ORM vs Active Record
-By now you should already be familiar with the concept of an [ORM](http://en.wikipedia.org/wiki/Object-relational_mapping) and have written something of your own via the `Student` and `InteractiveRecord` classes we've been dealing with.
 
-Building your own little ORM for a single Class is a great way to learn about how object oriented programming languages commonly interact with a database, but imagine you had two, or three, or ten classes in your application that all corresponded to different tables in the database. Building those same kinds of methods into each of them would be a lot of work! Ok, maybe you're thinking: I bet I could just write one Class that would have methods that could work with any table, and use that instead. Go for it! Don't really though, that will become a lot of code really quick, and as your demands grow, maintenance and stability will quickly become an issue as well! The best ORMs develop over time and require a lot of testing. 
+By now you be familiar with the concept of an [ORM][], an Object-Relation
+Mapper, and should have written something of your own in the `Student` and
+`InteractiveRecord` classes.  Our latest iteration was our most powerful yet,
+it could give us lots of functionality via inheritance.
 
-So, chances are, you just don't know enough about Ruby or databases yet to make something flexible or efficient enough to meet your needs as a professional web application developer. Not to worry, you're not the first person to have this problem, and there are already plenty of great libraries out there that will make your life easier. Meet [Active Record](http://guides.rubyonrails.org/active_record_basics.html), the database toolkit for Ruby!
+While building your own ORM for a single `Class` is a great way to learn about
+how object-oriented programming languages commonly interact with a database,
+imagine you had _many_ more classes.  To test and maintain custom code for each
+project we work on would distract our attention from making cool stuff to
+building database connectivity. To save themselves and other developers this
+headache, the [ActiveRecord][AR] Ruby gem team built the [ActiveRecord][AR]
+gem.
 
-Still confused? Let's take a quick look at what Active Record can do.
+In this lesson we'll read about how to to have `ActiveRecord` link our Ruby
+models with rows in a database table. We won't write the code yet, but we'll
+familiarize ourself with common code blocs used in `ActiveRecord`-using
+projects.
 
 ## Active Record ORM
-Active Record is a Ruby gem, meaning we get an entire library of code just by running `gem install activerecord` or by including it in our `Gemfile`. As a result, we can get an enormous amount of functionality simply by following a few conventions. 
+
+Active Record is a Ruby gem, meaning we get an entire library of code just by
+running `gem install activerecord` or by including it in our `Gemfile`.
 
 #### Connect to DB
-This is how we would connect to a database:
+
+Once our Gem environment knows to put `ActiveRecord` into the picture, we need
+to tell `ActiveRecord` where the database is located that it will be working
+with.
+
+We do this by running `ActiveRecord::Base.establish_connection`. Once
+`establish_connection` is run, `ActiveRecord::Base` keeps it stored as a class
+variable at `ActiveRecord::Base.connection`.
+
+> **NOTE**: If you'd like to type along in an IDE environment, you can experiment by using
+IRB with: `irb -r active_record` provided you've installed `ActiveRecord` with
+`gem install active_record`
+
 ```ruby
-connection = ActiveRecord::Base.establish_connection(
+ActiveRecord::Base.establish_connection(
   :adapter => "sqlite3",
   :database => "db/students.sqlite"
 )
 ```
 
 #### Create a table
+
+But our database is empty. Let's create a table to hold students.
+
 Let's create our table using SQL:
+
 ```ruby
 sql = <<-SQL
   CREATE TABLE IF NOT EXISTS students (
-  id INTEGER PRIMARY KEY, 
+  id INTEGER PRIMARY KEY,
   name TEXT
   )
 SQL
 
+# Remember, the previous step has to run first so that `connection` is set!
 ActiveRecord::Base.connection.execute(sql)
 ```
 
-It starts to get interesting when you make use of Active Record's built-in ORM utilities to extend your Ruby classes with Active Record's `Model` class. With Active Record and other ORMs, this is managed through [Class Inheritance](http://rubylearning.com/satishtalim/ruby_inheritance.html).
+#### Link a Student "model" to the database table `students`
 
-#### Active Record Methods
-To add Active Record's `Base` methods to your class, inherit from `ActiveRecord::Base`:
+The last step is to tell your Ruby class to make use of `ActiveRecord`'s
+built-in ORM methods.  With Active Record and other ORMs, this is managed
+through [Class Inheritance][CI]. We simply make _our_ class (`Student`) a
+subclass of `ActiveRecord::Base`.
+
 ```ruby
 class Student < ActiveRecord::Base
 end
 ```
 
-Now your `Student` class has a whole bunch of [new methods](http://guides.rubyonrails.org/active_record_basics.html#creating-active-record-models) available to it that are built into Active Record.
+Our `Student` class is now our gateway for talking to the `students` table in
+the database.  The `Student` class has gained a whole bunch of [new
+methods][ar-methods] via its inheritance relationship to `ActiveRecord`. Let's
+look at a few of them
 
 ###### `.column_names`
+
 Retrieve a list of all the columns in the table:
+
 ```ruby
 Student.column_names
 #=> [:id, :name]
 ```
 
 ###### `.create`
+
 Create a new `Student` entry in the database:
+
 ```ruby
 Student.create(name: 'Jon')
 # INSERT INTO students (name) VALUES ('Jon')
 ```
 
 ###### `.find`
+
 Retrieve a `Student` from the database by `id`:
+
 ```ruby
 Student.find(1)
 ```
 
 ###### `.find_by`
+
 Find by any attribute, such as `name`:
+
 ```ruby
 Student.find_by(name: 'Jon')
 # SELECT * FROM students WHERE (name = 'Jon') LIMIT 1
 ```
 
 ###### `attr_accessors`
-You can get or set attributes of an instance of `Student` once you've retrieved it:
+
+You can get or set attributes of an instance of `Student` once you've retrieved
+it:
+
 ```ruby
 student = Student.find_by(name: 'Jon')
 student.name
@@ -94,18 +139,30 @@ student.name
 ```
 
 ###### `#save`
+
 And then save those changes to the database:
+
 ```ruby
 student = Student.find_by(name: 'Jon')
 student.name = 'Steve'
 student.save
 ```
 
-Note that our `Student` class doesn't have any methods defined for `#name` either. Nor does it make use of Ruby's built-in `attr_accessor` method. 
+Note that our `Student` class doesn't have any methods defined for `#name`
+either. Nor does it make use of Ruby's built-in `attr_accessor` method.
 
 ```ruby
 class Student < ActiveRecord::Base
 end
 ```
 
+## Conclusion
+
+You've now seen how `ActiveRecord` creates a link between Ruby and databases.
+
 <p data-visibility='hidden'>View <a href='https://learn.co/lessons/active-record-mechanics-crud' title='Active Record Mechanics (CRUD)'>Active Record Mechanics (CRUD)</a> on Learn.co and start learning to code for free.</p>
+
+[ORM]: http://en.wikipedia.org/wiki/Object-relational_mapping
+[AR]: http://guides.rubyonrails.org/active_record_basics.html
+[CI]: http://rubylearning.com/satishtalim/ruby_inheritance.html
+[ar-methods]: http://guides.rubyonrails.org/active_record_basics.html#creating-active-record-models
