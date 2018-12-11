@@ -2,23 +2,23 @@
 
 ## Objectives
 
-1. Understand the connection between an ORM and Active Record
-2. Understand why Active Record is useful
-3. Develop a basic understanding of how to get started with Active Record
+1.  Understand the connection between an ORM and Active Record
+2.  Understand why Active Record is useful
+3.  Develop a basic understanding of how to get started with Active Record
 
 ## ORM vs Active Record
 
-By now you be familiar with the concept of an [ORM][], an Object-Relation
+By now you are familiar with the concept of an [ORM][], an Object-Relation
 Mapper, and should have written something of your own in the `Student` and
-`InteractiveRecord` classes.  Our latest iteration was our most powerful yet,
+`InteractiveRecord` classes. Our latest iteration was our most powerful yet,
 it could give us lots of functionality via inheritance.
 
 While building your own ORM for a single `Class` is a great way to learn about
 how object-oriented programming languages commonly interact with a database,
-imagine you had _many_ more classes.  To test and maintain custom code for each
+imagine you had _many_ more classes. To test and maintain custom code for each
 project we work on would distract our attention from making cool stuff to
 building database connectivity. To save themselves and other developers this
-headache, the [ActiveRecord][AR] Ruby gem team built the [ActiveRecord][AR]
+headache, the [ActiveRecord][ar] Ruby gem team built the [ActiveRecord][ar]
 gem.
 
 In this lesson we'll read about how to to have `ActiveRecord` link our Ruby
@@ -42,8 +42,8 @@ We do this by running `ActiveRecord::Base.establish_connection`. Once
 variable at `ActiveRecord::Base.connection`.
 
 > **NOTE**: If you'd like to type along in an IDE environment, you can experiment by using
-IRB with: `irb -r active_record` provided you've installed `ActiveRecord` with
-`gem install active_record`
+> IRB with: `irb -r active_record` provided you've installed `ActiveRecord` with
+> `gem install active_record`
 
 ```ruby
 ActiveRecord::Base.establish_connection(
@@ -73,8 +73,8 @@ ActiveRecord::Base.connection.execute(sql)
 #### Link a Student "model" to the database table `students`
 
 The last step is to tell your Ruby class to make use of `ActiveRecord`'s
-built-in ORM methods.  With Active Record and other ORMs, this is managed
-through [Class Inheritance][CI]. We simply make _our_ class (`Student`) a
+built-in ORM methods. With Active Record and other ORMs, this is managed
+through [Class Inheritance][ci]. We simply make _our_ class (`Student`) a
 subclass of `ActiveRecord::Base`.
 
 ```ruby
@@ -83,7 +83,7 @@ end
 ```
 
 Our `Student` class is now our gateway for talking to the `students` table in
-the database.  The `Student` class has gained a whole bunch of [new
+the database. The `Student` class has gained a whole bunch of [new
 methods][ar-methods] via its inheritance relationship to `ActiveRecord`. Let's
 look at a few of them
 
@@ -162,7 +162,7 @@ You've now seen how `ActiveRecord` creates a link between Ruby and databases.
 
 <p data-visibility='hidden'>View <a href='https://learn.co/lessons/active-record-mechanics-crud' title='Active Record Mechanics (CRUD)'>Active Record Mechanics (CRUD)</a> on Learn.co and start learning to code for free.</p>
 
-[ORM]: http://en.wikipedia.org/wiki/Object-relational_mapping
-[AR]: http://guides.rubyonrails.org/active_record_basics.html
-[CI]: http://rubylearning.com/satishtalim/ruby_inheritance.html
+[orm]: http://en.wikipedia.org/wiki/Object-relational_mapping
+[ar]: http://guides.rubyonrails.org/active_record_basics.html
+[ci]: http://rubylearning.com/satishtalim/ruby_inheritance.html
 [ar-methods]: http://guides.rubyonrails.org/active_record_basics.html#creating-active-record-models
