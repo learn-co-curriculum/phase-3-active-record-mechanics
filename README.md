@@ -43,7 +43,7 @@ variable at `ActiveRecord::Base.connection`.
 
 > **NOTE**: If you'd like to type along in an IDE environment, you can experiment by using
 > IRB with: `irb -r active_record` provided you've installed `ActiveRecord` with
-> `gem install active_record`
+> `gem install activerecord`
 
 ```ruby
 ActiveRecord::Base.establish_connection(
