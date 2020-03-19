@@ -42,8 +42,8 @@ We do this by running `ActiveRecord::Base.establish_connection`. Once
 variable at `ActiveRecord::Base.connection`.
 
 > **NOTE**: If you'd like to type along in an IDE environment, you can experiment by using
-> IRB with: `irb -r active_record` provided you've installed `ActiveRecord` with
-> `gem install activerecord`
+> IRB with: `irb -r active_record` provided you've installed `ActiveRecord` and `sqlite3` with
+> `gem install activerecord sqlite3`
 
 ```ruby
 ActiveRecord::Base.establish_connection(
