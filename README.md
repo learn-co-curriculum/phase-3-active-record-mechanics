@@ -160,7 +160,7 @@ end
 
 You've now seen how `ActiveRecord` creates a link between Ruby and databases.
 
-<p data-visibility='hidden'>View <a href='https://learn.co/lessons/active-record-mechanics-crud' title='Active Record Mechanics (CRUD)'>Active Record Mechanics (CRUD)</a> on Learn.co and start learning to code for free.</p>
+
 
 [orm]: http://en.wikipedia.org/wiki/Object-relational_mapping
 [ar]: http://guides.rubyonrails.org/active_record_basics.html
