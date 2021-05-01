@@ -1,10 +1,10 @@
-# Active Record Mechanics (CRUD)
+# Active Record Mechanics
 
-## Objectives
+## Learning Goals
 
-1.  Understand the connection between an ORM and Active Record
-2.  Understand why Active Record is useful
-3.  Develop a basic understanding of how to get started with Active Record
+- Understand the connection between an ORM and Active Record
+- Understand why Active Record is useful
+- Develop a basic understanding of how to get started with Active Record
 
 ## ORM vs Active Record
 
