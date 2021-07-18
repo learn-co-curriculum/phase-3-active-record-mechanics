@@ -4,6 +4,7 @@
 
 - Understand the connection between an ORM and Active Record
 - Understand why Active Record is useful
+- Learn what "convention over configuration" means
 - Develop a basic understanding of how to get started with Active Record
 
 ## ORM vs Active Record
@@ -51,8 +52,8 @@ variable at `ActiveRecord::Base.connection`. You can look at this code in the
 
 ```ruby
 ActiveRecord::Base.establish_connection(
-  :adapter => "sqlite3",
-  :database => "db/students.sqlite"
+  adapter: "sqlite3",
+  database: "db/students.sqlite"
 )
 ```
 
@@ -86,9 +87,23 @@ end
 ```
 
 Our `Student` class is now our gateway for talking to the `students` table in
-the database. The `Student` class has gained a whole bunch of [new
-methods][ar-methods] via its inheritance relationship to `ActiveRecord`. Let's
-look at a few of them and try them out!
+the database.
+
+By simply following one _very important_ naming convention — **class names are
+singular** and **table names are plural** — we've done enough to establish a
+relationship between our `Student` class and the `students` table! Active Record
+"knows" that when we're using the `Student` class, the SQL code it writes for us
+should target the `students` table.
+
+How does Active Record "know" about this relationship? Active Record follows the
+paradigm of [**convention over configuration**][convention], which means that as
+developers, _as long as we follow the conventions_ that Active Record expects,
+we don't have to spend as much time writing out the configuration explicitly.
+That also means it is **very** important to understand the conventions Active
+Record expects. So, to repeat:
+
+When using Active Record, our **class names are singular** and **table names are
+plural**.
 
 ### Running the Example
 
@@ -101,6 +116,13 @@ ruby active_record.rb
 
 This will enter you into a Pry session where you can try out the methods listed
 below.
+
+> **Note**: If you run into an error with the `sqlite3` gem, try using
+> `gem pristine sqlite3` to restore the gem.
+
+The `Student` class is inheriting a whole bunch of [new methods][ar-methods]
+from the `ActiveRecord::Base` class. Let's look at a few of them and try them
+out!
 
 #### `.column_names`
 
@@ -118,10 +140,22 @@ Create a new `Student` entry in the database:
 ```ruby
 Student.create(name: 'Jon')
 # INSERT INTO students (name) VALUES ('Jon')
+# => #<Student:0x00007f985d0638b0 id: 1, name: "Jon">
 ```
 
 You'll also see a log of the SQL that Active Record is writing for us, just like
 we did in our own ORMs!
+
+#### `.all`
+
+Return all the records from the `students` table as instances of the `Student`
+class:
+
+```ruby
+Student.all
+# SELECT "students".* FROM "students"
+# => [#<Student:0x00007f985d0638b0 id: 1, name: "Jon">]
+```
 
 #### `.find`
 
@@ -130,6 +164,7 @@ Retrieve a `Student` from the database by `id`:
 ```ruby
 Student.find(1)
 # SELECT "students".* FROM "students" WHERE "students"."id" = 1 LIMIT 1
+# => #<Student:0x00007f985d0638b0 id: 1, name: "Jon">
 ```
 
 #### `.find_by`
@@ -139,6 +174,7 @@ Find by any attribute, such as `name`:
 ```ruby
 Student.find_by(name: 'Jon')
 # SELECT "students".* FROM "students" WHERE "students"."name" = 'Jon' LIMIT 1
+# => #<Student:0x00007f985d0638b0 id: 1, name: "Jon">
 ```
 
 #### `attr_accessors`
@@ -165,21 +201,33 @@ And then save those changes to the database:
 student = Student.find_by(name: 'Jon')
 student.name = 'Steve'
 student.save
+# UPDATE "students" SET "name" = "Steve" WHERE "students"."id" = 1
 ```
 
 Note that our `Student` class doesn't have any methods defined for `#name`
-either. Nor does it make use of Ruby's built-in `attr_accessor` method.
+either. Nor does it make use of Ruby's built-in `attr_accessor` method:
 
 ```ruby
 class Student < ActiveRecord::Base
 end
 ```
 
+All of the methods we've seen are coming from `ActiveRecord::Base`, and because
+we're following the convention of **singular class names** and **plural table
+names**.
+
 ## Conclusion
 
-You've now seen how `ActiveRecord` creates a link between Ruby and databases.
+You've now seen how Active Record creates a link between Ruby and databases. In
+the coming lessons, we'll explore how to build more realistic applications using
+Active Record, and some of the other methods we have access in our classes.
+
+## Resources
+
+- [Active Record Basics][ar]
 
 [orm]: http://en.wikipedia.org/wiki/Object-relational_mapping
 [ar]: http://guides.rubyonrails.org/active_record_basics.html
 [ci]: http://rubylearning.com/satishtalim/ruby_inheritance.html
 [ar-methods]: http://guides.rubyonrails.org/active_record_basics.html#creating-active-record-models
+[convention]: https://guides.rubyonrails.org/active_record_basics.html#convention-over-configuration-in-active-record
