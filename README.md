@@ -42,8 +42,8 @@ this lesson, we've included it in the `Gemfile` along with the `sqlite3` gem.
 
 ### Connect to DB
 
-Once our Gem environment knows to put into the picture, we need to tell Active
-Record where the database is located that it will be working with.
+Once our Gem environment knows what to put into the picture, we need to tell
+Active Record where the database is located that it will be working with.
 
 We do this by running `ActiveRecord::Base.establish_connection`. Once
 `establish_connection` is run, `ActiveRecord::Base` keeps it stored as a class
@@ -220,7 +220,7 @@ names**.
 
 You've now seen how Active Record creates a link between Ruby and databases. In
 the coming lessons, we'll explore how to build more realistic applications using
-Active Record, and some of the other methods we have access in our classes.
+Active Record, and some of the other methods we have access to in our classes.
 
 ## Resources
 
