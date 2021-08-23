@@ -110,8 +110,8 @@ plural**.
 To code along with these examples, first, run `bundle install` to set up the
 necessary gems. Then, run:
 
-```sh
-ruby active_record.rb
+```console
+$ ruby active_record.rb
 ```
 
 This will enter you into a Pry session where you can try out the methods listed
