@@ -12,14 +12,15 @@
 By now you are familiar with the concept of an [ORM][orm], an Object-Relational
 Mapper. While building your own ORM for a single class is a great way to learn
 about how object-oriented programming languages commonly interact with a
-database, imagine you had _many_ more classes. To test and maintain custom code
-for each project we work on would distract our attention from making cool stuff
-to building database connectivity.
+database, imagine you had _many_ more classes. Having to test and maintain
+custom code to build database connectivity for each project we work on would
+divert our attention from what we really want to be focusing on: making cool
+stuff.
 
-To save themselves and other developers this headache, the [Active Record][ar]
-Ruby gem team built the [Active Record][ar] gem.
+To save themselves and others this headache, a team of developers built the
+[Active Record][ar] Ruby gem.
 
-In this lesson, we'll read about how to to have Active link our Ruby models with
+In this lesson, we'll read about how to have Active Record link our Ruby models with
 rows in a database table. There's code in the `active_record.rb` file set up so
 you can follow along with the examples below. Fork and clone this lesson if
 you'd like to code along.
@@ -47,8 +48,8 @@ Active Record where the database is located that it will be working with.
 
 We do this by running `ActiveRecord::Base.establish_connection`. Once
 `establish_connection` is run, `ActiveRecord::Base` keeps it stored as a class
-variable at `ActiveRecord::Base.connection`. You can look at this code in the
-`active_record.rb` file:
+variable at `ActiveRecord::Base.connection`. We can do this by including the
+following code in the `active_record.rb` file:
 
 ```ruby
 ActiveRecord::Base.establish_connection(
@@ -212,9 +213,9 @@ class Student < ActiveRecord::Base
 end
 ```
 
-All of the methods we've seen are coming from `ActiveRecord::Base`, and because
-we're following the convention of **singular class names** and **plural table
-names**.
+All of the methods we've seen are coming from `ActiveRecord::Base`; we have
+access to them because we're following the convention of **singular class
+names** and **plural table names**.
 
 ## Conclusion
 
